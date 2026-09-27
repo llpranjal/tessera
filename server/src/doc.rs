@@ -222,7 +222,7 @@ mod tests {
     fn create_is_idempotent_for_replay() {
         let mut d = Doc::default();
         let op = create("a", json!({"x":1,"gone":null}));
-        d.apply(&[op.clone()]);
+        d.apply(std::slice::from_ref(&op));
         d.apply(&[op]);
         assert_eq!(d.len(), 1);
         assert_eq!(d.nodes["a"], props(json!({"x":1})));
